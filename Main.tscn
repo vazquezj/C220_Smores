@@ -1,0 +1,182 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://graphics/environment_tiles.tres" type="TileSet" id=1]
+[ext_resource path="res://Player.gd" type="Script" id=2]
+[ext_resource path="res://graphics/dragon.png" type="Texture" id=3]
+[ext_resource path="res://graphics/flame.png" type="Texture" id=4]
+[ext_resource path="res://Graphics/grahamChoc.png" type="Texture" id=5]
+[ext_resource path="res://Marshmallow.tscn" type="PackedScene" id=6]
+
+[sub_resource type="CircleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 14.9518
+
+[sub_resource type="Animation" id=2]
+
+resource_name = "flame"
+length = 0.5
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Flame/FlameSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 0 ]
+}
+
+[sub_resource type="RectangleShape2D" id=4]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
+[node name="Main" type="Node"]
+
+[node name="environment_bg" type="TileMap" parent="."]
+
+mode = 0
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 64, 64 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+tile_data = PoolIntArray( 0, 119, 1, 119, 2, 119, 3, 119, 4, 119, 5, 119, 6, 119, 7, 119, 8, 119, 9, 119, 10, 119, 11, 119, 12, 119, 13, 119, 14, 119, 15, 119, 16, 119, 17, 119, 18, 119, 19, 119, 65536, 119, 65537, 119, 65538, 119, 65539, 119, 65540, 1, 65541, 37, 65542, 65, 65543, 119, 65544, 119, 65545, 119, 65546, 119, 65547, 119, 65548, 119, 65549, 119, 65550, 119, 65551, 119, 65552, 119, 65553, 119, 65554, 119, 65555, 119, 131072, 119, 131073, 119, 131074, 119, 131075, 119, 131076, 13, 131077, 127, 131078, 79, 131079, 119, 131080, 119, 131081, 119, 131082, 119, 131083, 119, 131084, 119, 131085, 119, 131086, 119, 131087, 119, 131088, 119, 131089, 119, 131090, 119, 131091, 119, 196608, 119, 196609, 119, 196610, 119, 196611, 119, 196612, 13, 196613, 127, 196614, 79, 196615, 119, 196616, 119, 196617, 119, 196618, 119, 196619, 119, 196620, 119, 196621, 119, 196622, 119, 196623, 119, 196624, 119, 196625, 119, 196626, 119, 196627, 119, 262144, 119, 262145, 119, 262146, 119, 262147, 119, 262148, 13, 262149, 127, 262150, 79, 262151, 119, 262152, 119, 262153, 119, 262154, 119, 262155, 119, 262156, 119, 262157, 119, 262158, 119, 262159, 119, 262160, 119, 262161, 119, 262162, 119, 262163, 119, 327680, 119, 327681, 119, 327682, 119, 327683, 119, 327684, 13, 327685, 127, 327686, 179, 327687, 37, 327688, 37, 327689, 37, 327690, 37, 327691, 37, 327692, 37, 327693, 37, 327694, 37, 327695, 37, 327696, 37, 327697, 37, 327698, 37, 327699, 37, 393216, 119, 393217, 119, 393218, 119, 393219, 119, 393220, 13, 393221, 127, 393222, 127, 393223, 127, 393224, 127, 393225, 127, 393226, 127, 393227, 127, 393228, 127, 393229, 127, 393230, 127, 393231, 127, 393232, 127, 393233, 127, 393234, 127, 393235, 127, 458752, 119, 458753, 119, 458754, 119, 458755, 119, 458756, 25, 458757, 53, 458758, 53, 458759, 53, 458760, 53, 458761, 53, 458762, 53, 458763, 177, 458764, 127, 458765, 176, 458766, 53, 458767, 53, 458768, 53, 458769, 53, 458770, 53, 458771, 53, 524288, 119, 524289, 119, 524290, 119, 524291, 119, 524292, 119, 524293, 119, 524294, 119, 524295, 119, 524296, 119, 524297, 119, 524298, 119, 524299, 13, 524300, 127, 524301, 79, 524302, 119, 524303, 119, 524304, 119, 524305, 119, 524306, 119, 524307, 119, 589824, 119, 589825, 119, 589826, 119, 589827, 119, 589828, 119, 589829, 119, 589830, 119, 589831, 119, 589832, 119, 589833, 119, 589834, 119, 589835, 13, 589836, 127, 589837, 79, 589838, 119, 589839, 119, 589840, 119, 589841, 119, 589842, 119, 589843, 119, 655360, 119, 655361, 119, 655362, 119, 655363, 119, 655364, 119, 655365, 119, 655366, 119, 655367, 119, 655368, 119, 655369, 119, 655370, 119, 655371, 13, 655372, 127, 655373, 79, 655374, 119, 655375, 119, 655376, 119, 655377, 119, 655378, 119, 655379, 119, 720896, 119, 720897, 119, 720898, 119, 720899, 119, 720900, 119, 720901, 119, 720902, 119, 720903, 119, 720904, 119, 720905, 119, 720906, 119, 720907, 13, 720908, 127, 720909, 79, 720910, 119, 720911, 119, 720912, 119, 720913, 119, 720914, 119, 720915, 119 )
+_sections_unfolded = [ "Cell" ]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="set_decoration" type="TileMap" parent="."]
+
+mode = 0
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 64, 64 )
+cell_quadrant_size = 16
+cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+cell_half_offset = 2
+cell_tile_origin = 0
+cell_y_sort = false
+collision_use_kinematic = false
+collision_friction = 1.0
+collision_bounce = 0.0
+collision_layer = 1
+collision_mask = 1
+occluder_light_mask = 1
+tile_data = PoolIntArray( 65551, 132, 131084, 134, 196617, 130, 327689, 128, 327693, 128, 327697, 128, 393217, 132, 393220, 133, 458758, 128, 589837, 133, 589842, 130, 655368, 132 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+
+editor/display_folded = true
+position = Vector2( 687.715, 424.39 )
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="DragonSprite" type="Sprite" parent="Player"]
+
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+
+visible = false
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/flame = SubResource( 2 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "flame"
+_sections_unfolded = [ "Playback", "playback" ]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+
+[node name="Flame" type="Area2D" parent="Player"]
+
+editor/display_folded = true
+position = Vector2( 33.6038, -0.0198364 )
+scale = Vector2( 0.425767, 0.425767 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="FlameSprite" type="Sprite" parent="Player/Flame"]
+
+position = Vector2( -1.41809, 0.0465698 )
+scale = Vector2( 2.3487, 2.3487 )
+texture = ExtResource( 4 )
+vframes = 2
+_sections_unfolded = [ "Animation", "Transform" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Flame"]
+
+visible = false
+position = Vector2( 1.93248, 3.68254 )
+scale = Vector2( 3.10229, 1.47359 )
+shape = SubResource( 4 )
+
+[node name="grahamChoc" type="Sprite" parent="."]
+
+position = Vector2( 350.823, 55.2754 )
+texture = ExtResource( 5 )
+
+[node name="Marshmallow" parent="grahamChoc" instance=ExtResource( 6 )]
+
+position = Vector2( -60.046, 285.362 )
+
+[node name="Marshmallow" parent="grahamChoc/Marshmallow" instance=ExtResource( 6 )]
+
+position = Vector2( 114.777, -113.263 )
+
+[node name="Marshmallow" parent="." instance=ExtResource( 6 )]
+
+
