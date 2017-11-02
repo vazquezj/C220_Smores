@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://graphics/environment_tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -9,35 +9,38 @@
 [ext_resource path="res://Graphics/marshmallowSkin.png" type="Texture" id=7]
 [ext_resource path="res://Graphics/marshmallowFaces.png" type="Texture" id=8]
 [ext_resource path="res://Spawn.gd" type="Script" id=9]
+[ext_resource path="res://Graphics/campfireStrip.png" type="Texture" id=10]
+[ext_resource path="res://Campfire.gd" type="Script" id=11]
+[ext_resource path="res://Graphics/campfireFlame.png" type="Texture" id=12]
 
 [sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 14.9518
 
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 10, 10 )
+
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="RectangleShape2D" id=7]
-
-custom_solver_bias = 0.0
-extents = Vector2( 10, 10 )
-
-[sub_resource type="Curve2D" id=8]
+[sub_resource type="Curve2D" id=4]
 
 bake_interval = 5.0
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 799.59, 713.561, 0, 0, 0, 0, 796.24, 418.281, 0, 0, 0, 0, 355.478, 404.678, 0, 0, 0, 0, 350.037, 153.009 )
 }
 
-[sub_resource type="RectangleShape2D" id=9]
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id=6]
 
 resource_name = "MarshmallowPathFollowAnim"
 length = 8.0
@@ -54,6 +57,29 @@ tracks/0/keys = {
 "update": 0,
 "values": [ 0.0, 0.99 ]
 }
+
+[sub_resource type="Animation" id=7]
+
+resource_name = "FireAnim"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("campfireFlame:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 0, 0 ]
+}
+
+[sub_resource type="CircleShape2D" id=8]
+
+custom_solver_bias = 0.0
+radius = 167.711
 
 [node name="Main" type="Node"]
 
@@ -170,7 +196,7 @@ _sections_unfolded = [ "Animation", "Transform" ]
 visible = false
 position = Vector2( 1.93248, 3.68254 )
 scale = Vector2( 3.10229, 1.47359 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 
 [node name="GrahamCracker" type="Area2D" parent="."]
 
@@ -198,13 +224,12 @@ _sections_unfolded = [ "Transform" ]
 visible = false
 position = Vector2( 0, 70.7041 )
 scale = Vector2( 4.00693, 2.65207 )
-shape = SubResource( 7 )
+shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="MarshmallowPath" type="Path2D" parent="."]
 
-editor/display_folded = true
-curve = SubResource( 8 )
+curve = SubResource( 4 )
 
 [node name="MarshmallowPathFollow" type="PathFollow2D" parent="MarshmallowPath"]
 
@@ -251,14 +276,14 @@ _sections_unfolded = [ "Animation", "Transform", "Z" ]
 visible = false
 position = Vector2( -0.239744, 0.0162128 )
 scale = Vector2( 2.11337, 2.44358 )
-shape = SubResource( 9 )
+shape = SubResource( 5 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MarshmallowPath/MarshmallowPathFollow"]
 
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 root_node = NodePath("..")
-anims/MarshmallowPathFollowAnim = SubResource( 10 )
+anims/MarshmallowPathFollowAnim = SubResource( 6 )
 playback/active = true
 playback/speed = 1.0
 blend_times = [  ]
@@ -273,7 +298,59 @@ script = ExtResource( 9 )
 process_mode = 1
 wait_time = 1.5
 one_shot = false
+autostart = false
+
+[node name="campfireStrip" type="Sprite" parent="."]
+
+position = Vector2( 475.356, 318.295 )
+texture = ExtResource( 10 )
+hframes = 3
+frame = 2
+script = ExtResource( 11 )
+_sections_unfolded = [ "Animation" ]
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="campfireFlame" type="Sprite" parent="campfireStrip"]
+
+position = Vector2( 0.108429, -22.4131 )
+texture = ExtResource( 12 )
+hframes = 2
+frame = 1
+_sections_unfolded = [ "Animation" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="campfireStrip"]
+
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+root_node = NodePath("..")
+anims/FireAnim = SubResource( 7 )
+playback/active = true
+playback/speed = 1.0
+blend_times = [  ]
+autoplay = "FireAnim"
+
+[node name="Timer" type="Timer" parent="campfireStrip"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
 autostart = true
+
+[node name="FireRange" type="Area2D" parent="campfireStrip"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="campfireStrip/FireRange"]
+
+shape = SubResource( 8 )
 
 [connection signal="area_entered" from="Player/Flame" to="MarshmallowPath/MarshmallowPathFollow/Marshmallow" method="_on_Flame_area_entered"]
 
@@ -284,5 +361,9 @@ autostart = true
 [connection signal="animation_finished" from="MarshmallowPath/MarshmallowPathFollow/AnimationPlayer" to="MarshmallowPath/MarshmallowPathFollow/Marshmallow" method="_on_AnimationPlayer_animation_finished"]
 
 [connection signal="timeout" from="Timer" to="Spawn" method="_on_Timer_timeout"]
+
+[connection signal="timeout" from="campfireStrip/Timer" to="campfireStrip" method="_on_Timer_timeout"]
+
+[connection signal="area_entered" from="campfireStrip/FireRange" to="campfireStrip" method="_on_FireRange_area_entered"]
 
 
