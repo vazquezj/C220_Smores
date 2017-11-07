@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://graphics/environment_tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://Graphics/campfireStrip.png" type="Texture" id=10]
 [ext_resource path="res://Campfire.gd" type="Script" id=11]
 [ext_resource path="res://Graphics/campfireFlame.png" type="Texture" id=12]
+[ext_resource path="res://Graphics/campfireRange.png" type="Texture" id=13]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -79,7 +80,7 @@ tracks/0/keys = {
 [sub_resource type="CircleShape2D" id=8]
 
 custom_solver_bias = 0.0
-radius = 167.711
+radius = 221.923
 
 [node name="Main" type="Node"]
 
@@ -126,6 +127,7 @@ tile_data = PoolIntArray(  )
 
 [node name="Player" type="KinematicBody2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( 587.148, 577.394 )
 input_pickable = false
 collision_layer = 1
@@ -231,6 +233,13 @@ _sections_unfolded = [ "Transform" ]
 
 curve = SubResource( 4 )
 
+[node name="Timer" type="Timer" parent="MarshmallowPath"]
+
+process_mode = 1
+wait_time = 1.5
+one_shot = false
+autostart = true
+
 [node name="MarshmallowPathFollow" type="PathFollow2D" parent="MarshmallowPath"]
 
 position = Vector2( 799.59, 713.561 )
@@ -243,7 +252,9 @@ cubic_interp = true
 loop = true
 lookahead = 4.0
 
-[node name="Marshmallow" type="Area2D" parent="MarshmallowPath/MarshmallowPathFollow"]
+[node name="Marshmallow" type="Area2D" parent="MarshmallowPath/MarshmallowPathFollow" groups=[
+"Creep",
+]]
 
 position = Vector2( -0.25531, -0.589355 )
 rotation = 3.14159
@@ -293,16 +304,9 @@ autoplay = "MarshmallowPathFollowAnim"
 
 script = ExtResource( 9 )
 
-[node name="Timer" type="Timer" parent="."]
-
-process_mode = 1
-wait_time = 1.5
-one_shot = false
-autostart = false
-
 [node name="campfireStrip" type="Sprite" parent="."]
 
-position = Vector2( 475.356, 318.295 )
+position = Vector2( 443.622, 490.324 )
 texture = ExtResource( 10 )
 hframes = 3
 frame = 2
@@ -347,23 +351,34 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
+_sections_unfolded = [ "Collision" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="campfireStrip/FireRange"]
 
+visible = false
 shape = SubResource( 8 )
+
+[node name="campfireRange" type="Sprite" parent="campfireStrip/FireRange"]
+
+position = Vector2( -1.38583, 0.0892897 )
+scale = Vector2( 2.29653, 2.29653 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="area_entered" from="Player/Flame" to="MarshmallowPath/MarshmallowPathFollow/Marshmallow" method="_on_Flame_area_entered"]
 
 [connection signal="area_entered" from="GrahamCracker" to="MarshmallowPath/MarshmallowPathFollow/Marshmallow" method="_on_GrahamCracker_area_entered"]
 
+[connection signal="timeout" from="MarshmallowPath/Timer" to="Spawn" method="_on_Timer_timeout"]
+
 [connection signal="area_entered" from="MarshmallowPath/MarshmallowPathFollow/Marshmallow" to="MarshmallowPath/MarshmallowPathFollow/Marshmallow" method="_on_Marshmellow_area_entered"]
 
 [connection signal="animation_finished" from="MarshmallowPath/MarshmallowPathFollow/AnimationPlayer" to="MarshmallowPath/MarshmallowPathFollow/Marshmallow" method="_on_AnimationPlayer_animation_finished"]
 
-[connection signal="timeout" from="Timer" to="Spawn" method="_on_Timer_timeout"]
-
 [connection signal="timeout" from="campfireStrip/Timer" to="campfireStrip" method="_on_Timer_timeout"]
 
 [connection signal="area_entered" from="campfireStrip/FireRange" to="campfireStrip" method="_on_FireRange_area_entered"]
+
+[connection signal="area_exited" from="campfireStrip/FireRange" to="campfireStrip" method="_on_FireRange_area_exited"]
 
 
