@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+
+
 func _ready():
 	pass
 
@@ -24,10 +26,14 @@ func _process(delta):
 		self.rotation_deg = 90
 	
 	var speed = 300
-	
 	self.move_and_slide(direction.normalized() * speed)
 	
 	if Input.is_action_pressed("flame"):
 		$"Flame".visible = true
 	else:
 		$"Flame".visible = false
+	
+	if Input.is_action_just_pressed("campfire"):
+		var newCampfire = load("res://Campfire.tscn").instance()
+		$"..".add_child(newCampfire)
+		newCampfire.position = self.position

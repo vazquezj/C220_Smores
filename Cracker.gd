@@ -3,14 +3,19 @@ extends Area2D
 var lose = false
 
 func _on_GrahamCracker_area_entered( area ):
-	#print (area.is_in_group("Creep"))
-	#print (area.get_node("MarshmallowFaces").frame)
-	if area.is_in_group("Creep") and area.get_node("MarshmallowFaces").frame == 0:
-		#print("Losing?")
-		$".".lose_condition()
+	#print (area.get_node("ChocolateFaces").frame)
+	if area.is_in_group("Creep"):
+		if area.get_node("MarshmallowFaces").frame == 0:
+			$".".lose_condition()
+		#if area.get_node("ChocolateFaces").frame == 0:
+			#$".".lose_condition()
+
 func lose_condition():
-	#print ("Lose")
 	if lose == false:
 		lose = true
 		$"../LoseScreen".position = $"../Player".global_position
 		$"../LoseScreen".visible = true
+
+func _process(delta):
+	if Input.is_action_just_pressed("restart_game") and lose == true:
+		get_tree().reload_current_scene()

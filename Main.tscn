@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://graphics/environment_tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
@@ -7,50 +7,23 @@
 [ext_resource path="res://Cracker.gd" type="Script" id=5]
 [ext_resource path="res://Graphics/grahamChoc.png" type="Texture" id=6]
 [ext_resource path="res://Spawn.gd" type="Script" id=7]
-[ext_resource path="res://Graphics/campfireStrip.png" type="Texture" id=8]
-[ext_resource path="res://Campfire.gd" type="Script" id=9]
-[ext_resource path="res://Graphics/campfireFlame.png" type="Texture" id=10]
-[ext_resource path="res://Graphics/campfireRange.png" type="Texture" id=11]
-[ext_resource path="res://Graphics/you_lose.png" type="Texture" id=12]
-[ext_resource path="res://Graphics/you_win.png" type="Texture" id=13]
+[ext_resource path="res://Graphics/you_lose.png" type="Texture" id=8]
+[ext_resource path="res://Graphics/you_win.png" type="Texture" id=9]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=4]
 
 custom_solver_bias = 0.0
 radius = 14.9518
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=6]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
-
-[sub_resource type="Animation" id=4]
-
-resource_name = "FireAnim"
-length = 1.0
-loop = true
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath("campfireFlame:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 1 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 1,
-"values": [ 1, 0, 0 ]
-}
-
-[sub_resource type="CircleShape2D" id=5]
-
-custom_solver_bias = 0.0
-radius = 221.923
 
 [node name="Main" type="Node"]
 
@@ -116,7 +89,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 
 visible = false
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -170,7 +143,7 @@ _sections_unfolded = [ "Animation", "Transform" ]
 visible = false
 position = Vector2( 1.93248, 3.68254 )
 scale = Vector2( 3.10229, 1.47359 )
-shape = SubResource( 2 )
+shape = SubResource( 5 )
 
 [node name="GrahamCracker" type="Area2D" parent="." groups=[
 "Cracker",
@@ -201,104 +174,45 @@ _sections_unfolded = [ "Transform" ]
 visible = false
 position = Vector2( 0, 70.7041 )
 scale = Vector2( 4.00693, 2.65207 )
-shape = SubResource( 3 )
+shape = SubResource( 6 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Spawn" type="Position2D" parent="."]
 
 script = ExtResource( 7 )
 
-[node name="campfireStrip" type="Sprite" parent="."]
-
-editor/display_folded = true
-position = Vector2( 443.622, 490.324 )
-texture = ExtResource( 8 )
-hframes = 3
-frame = 2
-script = ExtResource( 9 )
-_sections_unfolded = [ "Animation" ]
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="campfireFlame" type="Sprite" parent="campfireStrip"]
-
-position = Vector2( 0.108429, -22.4131 )
-texture = ExtResource( 10 )
-hframes = 2
-frame = 1
-_sections_unfolded = [ "Animation" ]
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="campfireStrip"]
-
-playback_process_mode = 1
-playback_default_blend_time = 0.0
-root_node = NodePath("..")
-anims/FireAnim = SubResource( 4 )
-playback/active = true
-playback/speed = 1.0
-blend_times = [  ]
-autoplay = "FireAnim"
-
-[node name="Timer" type="Timer" parent="campfireStrip"]
-
-process_mode = 1
-wait_time = 1.0
-one_shot = false
-autostart = true
-
-[node name="FireRange" type="Area2D" parent="campfireStrip"]
-
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-_sections_unfolded = [ "Collision" ]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="campfireStrip/FireRange"]
-
-visible = false
-shape = SubResource( 5 )
-
-[node name="campfireRange" type="Sprite" parent="campfireStrip/FireRange"]
-
-position = Vector2( -1.38583, 0.0892897 )
-scale = Vector2( 2.29653, 2.29653 )
-texture = ExtResource( 11 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="SpawnTimer" type="Timer" parent="."]
-
-process_mode = 1
-wait_time = 1.5
-one_shot = false
-autostart = true
-
 [node name="LoseScreen" type="Sprite" parent="."]
 
 visible = false
 position = Vector2( -234.352, 129.714 )
-texture = ExtResource( 12 )
+texture = ExtResource( 8 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="WinScreen" type="Sprite" parent="."]
 
 visible = false
 position = Vector2( -351.925, 366.366 )
-texture = ExtResource( 13 )
+texture = ExtResource( 9 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="MarshmallowSpawnTimer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.5
+one_shot = false
+autostart = true
+
+[node name="ChocolateSpawnTimer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 2.5
+one_shot = false
+autostart = false
 
 [connection signal="area_entered" from="GrahamCracker" to="GrahamCracker" method="_on_GrahamCracker_area_entered"]
 
-[connection signal="timeout" from="campfireStrip/Timer" to="campfireStrip" method="_on_Timer_timeout"]
+[connection signal="timeout" from="MarshmallowSpawnTimer" to="Spawn" method="_on_MarshmallowSpawnTimer_timeout"]
 
-[connection signal="area_entered" from="campfireStrip/FireRange" to="campfireStrip" method="_on_FireRange_area_entered"]
-
-[connection signal="area_exited" from="campfireStrip/FireRange" to="campfireStrip" method="_on_FireRange_area_exited"]
-
-[connection signal="timeout" from="SpawnTimer" to="Spawn" method="_on_SpawnTimer_timeout"]
+[connection signal="timeout" from="ChocolateSpawnTimer" to="Spawn" method="_on_ChocolateSpawnTimer_timeout"]
 
 
