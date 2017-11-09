@@ -1,9 +1,9 @@
 extends Position2D
 
-var marshmallowsLeft = 2
+var marshmallowsLeft = 3
 var spawn = true
 
-func _on_Timer_timeout():
+func _on_SpawnTimer_timeout():
 	if spawn == true:
 		var newMarshmallow = load("res://Marshmallow.tscn").instance()
 		$"..".add_child(newMarshmallow)
