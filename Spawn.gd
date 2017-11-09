@@ -1,8 +1,8 @@
 extends Position2D
 
-var marshmallowsLeft = 3
+var marshmallowsLeft = 6
 var marshmallowSpawn = true
-var chocolatesLeft = 3
+var chocolatesLeft = 2
 var chocolateSpawn = true
 
 func _on_MarshmallowSpawnTimer_timeout():

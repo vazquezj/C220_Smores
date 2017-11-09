@@ -198,14 +198,14 @@ _sections_unfolded = [ "Transform" ]
 [node name="MarshmallowSpawnTimer" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 1.5
+wait_time = 3.0
 one_shot = false
 autostart = true
 
 [node name="ChocolateSpawnTimer" type="Timer" parent="."]
 
 process_mode = 1
-wait_time = 2.5
+wait_time = 8.0
 one_shot = false
 autostart = false
 
