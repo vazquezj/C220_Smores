@@ -3,16 +3,16 @@
 [ext_resource path="res://graphics/environment_tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
 [ext_resource path="res://graphics/dragon.png" type="Texture" id=3]
-[ext_resource path="res://Graphics/you_win.png" type="Texture" id=4]
-[ext_resource path="res://Graphics/you_lose.png" type="Texture" id=5]
-[ext_resource path="res://graphics/flame.png" type="Texture" id=6]
-[ext_resource path="res://Cracker.gd" type="Script" id=7]
-[ext_resource path="res://Graphics/grahamChoc.png" type="Texture" id=8]
-[ext_resource path="res://Spawn.gd" type="Script" id=9]
-[ext_resource path="res://Graphics/campfireStrip.png" type="Texture" id=10]
-[ext_resource path="res://Campfire.gd" type="Script" id=11]
-[ext_resource path="res://Graphics/campfireFlame.png" type="Texture" id=12]
-[ext_resource path="res://Graphics/campfireRange.png" type="Texture" id=13]
+[ext_resource path="res://graphics/flame.png" type="Texture" id=4]
+[ext_resource path="res://Cracker.gd" type="Script" id=5]
+[ext_resource path="res://Graphics/grahamChoc.png" type="Texture" id=6]
+[ext_resource path="res://Spawn.gd" type="Script" id=7]
+[ext_resource path="res://Graphics/campfireStrip.png" type="Texture" id=8]
+[ext_resource path="res://Campfire.gd" type="Script" id=9]
+[ext_resource path="res://Graphics/campfireFlame.png" type="Texture" id=10]
+[ext_resource path="res://Graphics/campfireRange.png" type="Texture" id=11]
+[ext_resource path="res://Graphics/you_lose.png" type="Texture" id=12]
+[ext_resource path="res://Graphics/you_win.png" type="Texture" id=13]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -97,6 +97,7 @@ tile_data = PoolIntArray(  )
 
 [node name="Player" type="KinematicBody2D" parent="."]
 
+editor/display_folded = true
 position = Vector2( 587.148, 577.394 )
 input_pickable = false
 collision_layer = 1
@@ -141,18 +142,6 @@ editor_draw_screen = true
 editor_draw_limits = false
 editor_draw_drag_margin = false
 
-[node name="WinScreen" type="Sprite" parent="Player/Camera2D"]
-
-visible = false
-texture = ExtResource( 4 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="LoseScreen" type="Sprite" parent="Player/Camera2D"]
-
-visible = false
-texture = ExtResource( 5 )
-_sections_unfolded = [ "Transform" ]
-
 [node name="Flame" type="Area2D" parent="Player" groups=[
 "Fire",
 ]]
@@ -172,7 +161,7 @@ audio_bus_name = "Master"
 
 position = Vector2( -1.41809, 0.0465698 )
 scale = Vector2( 2.3487, 2.3487 )
-texture = ExtResource( 6 )
+texture = ExtResource( 4 )
 vframes = 2
 _sections_unfolded = [ "Animation", "Transform" ]
 
@@ -187,6 +176,7 @@ shape = SubResource( 2 )
 "Cracker",
 ]]
 
+editor/display_folded = true
 position = Vector2( 352.014, 55.7142 )
 input_pickable = true
 gravity_vec = Vector2( 0, 1 )
@@ -195,7 +185,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = ExtResource( 7 )
+script = ExtResource( 5 )
 _sections_unfolded = [ "Transform" ]
 __meta__ = {
 "_edit_group_": true
@@ -203,7 +193,7 @@ __meta__ = {
 
 [node name="GrahamCrackerSprite" type="Sprite" parent="GrahamCracker"]
 
-texture = ExtResource( 8 )
+texture = ExtResource( 6 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrahamCracker"]
@@ -216,16 +206,16 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Spawn" type="Position2D" parent="."]
 
-script = ExtResource( 9 )
+script = ExtResource( 7 )
 
 [node name="campfireStrip" type="Sprite" parent="."]
 
 editor/display_folded = true
 position = Vector2( 443.622, 490.324 )
-texture = ExtResource( 10 )
+texture = ExtResource( 8 )
 hframes = 3
 frame = 2
-script = ExtResource( 11 )
+script = ExtResource( 9 )
 _sections_unfolded = [ "Animation" ]
 __meta__ = {
 "_edit_group_": true
@@ -234,7 +224,7 @@ __meta__ = {
 [node name="campfireFlame" type="Sprite" parent="campfireStrip"]
 
 position = Vector2( 0.108429, -22.4131 )
-texture = ExtResource( 12 )
+texture = ExtResource( 10 )
 hframes = 2
 frame = 1
 _sections_unfolded = [ "Animation" ]
@@ -277,7 +267,7 @@ shape = SubResource( 5 )
 
 position = Vector2( -1.38583, 0.0892897 )
 scale = Vector2( 2.29653, 2.29653 )
-texture = ExtResource( 13 )
+texture = ExtResource( 11 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="SpawnTimer" type="Timer" parent="."]
@@ -286,6 +276,20 @@ process_mode = 1
 wait_time = 1.5
 one_shot = false
 autostart = true
+
+[node name="LoseScreen" type="Sprite" parent="."]
+
+visible = false
+position = Vector2( -234.352, 129.714 )
+texture = ExtResource( 12 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="WinScreen" type="Sprite" parent="."]
+
+visible = false
+position = Vector2( -351.925, 366.366 )
+texture = ExtResource( 13 )
+_sections_unfolded = [ "Transform" ]
 
 [connection signal="area_entered" from="GrahamCracker" to="GrahamCracker" method="_on_GrahamCracker_area_entered"]
 
