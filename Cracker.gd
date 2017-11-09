@@ -4,11 +4,16 @@ var lose = false
 
 func _on_GrahamCracker_area_entered( area ):
 	#print (area.get_node("ChocolateFaces").frame)
-	if area.is_in_group("Creep"):
+	if area.is_in_group("MarshCreep"):
 		if area.get_node("MarshmallowFaces").frame == 0:
 			$".".lose_condition()
-		#if area.get_node("ChocolateFaces").frame == 0:
-			#$".".lose_condition()
+		else:
+			$"../EnemiesLeft".increase_campfiresLeft()
+	if area.is_in_group("ChocoCreep"):
+		if area.get_node("ChocolateFaces").frame == 0:
+			$".".lose_condition()
+		else:
+			$"../EnemiesLeft".increase_campfiresLeft()
 
 func lose_condition():
 	if lose == false:

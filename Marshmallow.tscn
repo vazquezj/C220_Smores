@@ -52,6 +52,7 @@ loop = true
 lookahead = 4.0
 
 [node name="Marshmallow" type="Area2D" parent="MarshmallowPathFollow" groups=[
+"MarshCreep",
 "Creep",
 ]]
 

@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-var campfiresLeft = 4
-
 func _ready():
 	pass
 
@@ -33,8 +31,8 @@ func _process(delta):
 	else:
 		$"Flame".visible = false
 	
-	if Input.is_action_just_pressed("campfire") and campfiresLeft > 0:
-		campfiresLeft -= 1
+	if Input.is_action_just_pressed("campfire") and $"../CampfiresLeft".campfiresLeft > 0:
+		$"../CampfiresLeft".decrease_campfiresLeft()
 		var newCampfire = load("res://Campfire.tscn").instance()
 		$"..".add_child(newCampfire)
 		newCampfire.position = self.position

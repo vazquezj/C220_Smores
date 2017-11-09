@@ -54,6 +54,7 @@ lookahead = 4.0
 
 [node name="Chocolate" type="Area2D" parent="ChocolatePathFollow" groups=[
 "Creep",
+"ChocoCreep",
 ]]
 
 rotation = 3.14159
