@@ -20,8 +20,25 @@ func _process(delta):
 		self.rotation_deg = 270
 	if Input.is_action_pressed("player_down"): #Is held down
 		#print("down")
-		direction.y +=1
+		direction.y += 1
 		self.rotation_deg = 90
+	
+	if Input.is_action_pressed("player_right") and Input.is_action_pressed("player_down"):
+		direction.x += 1
+		direction.y += 1
+		self.rotation_deg = 45
+	if Input.is_action_pressed("player_down") and Input.is_action_pressed("player_left"):
+		direction.x -= 1
+		direction.y += 1
+		self.rotation_deg = 135
+	if Input.is_action_pressed("player_left") and Input.is_action_pressed("player_up"):
+		direction.x -= 1
+		direction.y -= 1
+		self.rotation_deg = 225
+	if Input.is_action_pressed("player_up") and Input.is_action_pressed("player_right"):
+		direction.x += 1
+		direction.y -= 1
+		self.rotation_deg = 315
 	
 	var speed = 300
 	self.move_and_slide(direction.normalized() * speed)

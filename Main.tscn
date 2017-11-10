@@ -12,17 +12,17 @@
 [ext_resource path="res://Graphics/you_lose.png" type="Texture" id=10]
 [ext_resource path="res://Graphics/you_win.png" type="Texture" id=11]
 
-[sub_resource type="CircleShape2D" id=4]
+[sub_resource type="CircleShape2D" id=1]
 
 custom_solver_bias = 0.0
 radius = 14.9518
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
@@ -91,7 +91,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 
 visible = false
-shape = SubResource( 4 )
+shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -145,7 +145,7 @@ _sections_unfolded = [ "Animation", "Transform" ]
 visible = false
 position = Vector2( 1.93248, 3.68254 )
 scale = Vector2( 3.10229, 1.47359 )
-shape = SubResource( 5 )
+shape = SubResource( 2 )
 
 [node name="GrahamCracker" type="Area2D" parent="." groups=[
 "Cracker",
@@ -176,7 +176,7 @@ _sections_unfolded = [ "Transform" ]
 visible = false
 position = Vector2( 0, 70.7041 )
 scale = Vector2( 4.00693, 2.65207 )
-shape = SubResource( 6 )
+shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="Spawn" type="Position2D" parent="."]
